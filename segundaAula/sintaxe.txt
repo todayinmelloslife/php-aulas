@@ -1,0 +1,15 @@
+Anotações sobre PHP
+
+Estrutura Básica
+
+- O código PHP só é executado se estiver entre as tags PHP:
+    <?php
+    ?>
+
+Uso do Ponto e Vírgula
+
+Em PHP, cada instrução deve terminar com um ponto e vírgula (`;`):
+    <?php
+    echo "Olá, mundo!";
+    $variavel = 10;
+    ?>

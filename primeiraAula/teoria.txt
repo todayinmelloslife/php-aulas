@@ -1,0 +1,19 @@
+PHP pode ser dividido em vertentes:
+
+1. Backend:
+    - Criação de sites dinâmicos
+    - Interação com banco de dados
+    - Geração de gráficos
+
+2. Script de linha de comando:
+    - Rodar scripts para ações no PC ou remotamente
+    - Administração de sistemas
+    - Tarefas agendadas (cron jobs)
+
+PHP é uma linguagem desenvolvida para deixar o HTML dinâmico:
+    - Linguagem open source
+    - Foco no desenvolvimento web
+    - Programação server-side:
+        - Server-side significa que o código é executado no servidor e não no navegador do usuário.
+        - O servidor processa o código PHP e envia o resultado (HTML) para o navegador.
+    - PHP significa "Personal Home Page" e "Hypertext Preprocessor"
