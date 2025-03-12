@@ -13,10 +13,10 @@
         echo "<p>Hello, world!</p>";
 
         // declaração de variáveis
-        $aluno = "Jason Sobreiro"; // string
-        $periodo = 3; // int
+        $aluno = "Duda"; // string
+        $periodo = 2; // int
         $disciplina = "Desenvolvimento de Sistemas"; // string
-        $media = 6.5; // float
+        $media = 10.0; // float
   
         echo "\n\tAluno: " . $aluno . "<br>"; // concatenação
         echo "\n\tPeríodo: $periodo<br>"; // interpolação
