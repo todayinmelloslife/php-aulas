@@ -16,3 +16,5 @@
 
   // funcao do php
   echo strtoupper("testando função");
+
+?>

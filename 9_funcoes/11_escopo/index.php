@@ -6,7 +6,7 @@
 
   function testeEscopo() {
 
-    $a = 5;
+    global $a;
 
     global $b;
 
@@ -34,3 +34,5 @@
   echo "ESCOPO GLOBAL DE B 2: $b <br>";
 
   testeEscopo();
+
+  ?>
