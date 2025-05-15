@@ -39,8 +39,9 @@
         <label for="foto">Foto:</label>
         <input type="file" class="form-control" id="foto" name="foto" accept="image/*">
         <?php if(!empty($item['foto'])): ?>
+          <?php $fotoPath = $BASE_URL . 'uploads/' . rawurlencode($item['foto']); ?>
           <p>Foto atual:</p>
-          <img src="<?= $BASE_URL ?>uploads/<?= htmlspecialchars($item['foto']) ?>" alt="Foto do item" style="max-width: 200px;">
+          <img src="<?= $fotoPath ?>" alt="Foto do item" style="max-width: 200px; height: auto;">
         <?php endif; ?>
       </div>
       <button type="submit" class="btn btn-primary">Atualizar</button>

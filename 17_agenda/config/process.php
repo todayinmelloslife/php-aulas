@@ -48,8 +48,26 @@
       $nome = $data["name"];
       $local = $data["local"];
       $data_encontro = $data["data"];
-      $foto = ""; // Aqui você pode implementar o upload da foto futuramente
       $id = $data["id"];
+
+      // Buscar foto atual do item
+      $foto = "";
+      $queryFoto = "SELECT foto FROM itens WHERE id = :id";
+      $stmtFoto = $conn->prepare($queryFoto);
+      $stmtFoto->bindParam(":id", $id);
+      $stmtFoto->execute();
+      $resultFoto = $stmtFoto->fetch(PDO::FETCH_ASSOC);
+      if ($resultFoto && !empty($resultFoto['foto'])) {
+        $foto = $resultFoto['foto'];
+      }
+
+      // Se o usuário enviou uma nova foto, faz upload e atualiza
+      if(isset($_FILES["foto"]) && $_FILES["foto"]["error"] == 0) {
+        $foto_nome = uniqid() . "_" . $_FILES["foto"]["name"];
+        $foto_destino = "../uploads/" . $foto_nome;
+        move_uploaded_file($_FILES["foto"]["tmp_name"], $foto_destino);
+        $foto = $foto_nome;
+      }
 
       $query = "UPDATE itens 
                 SET nome = :nome, local = :local, data_encontro = :data_encontro, foto = :foto 

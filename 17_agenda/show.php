@@ -26,7 +26,7 @@
       <p><?= htmlspecialchars($item["data"]) ?></p>
       <p class="bold">Foto:</p>
       <?php if(!empty($item["foto"])): ?>
-        <?php $fotoPath = $BASE_URL . 'uploads/' . htmlspecialchars($item["foto"]); ?>
+        <?php $fotoPath = $BASE_URL . 'uploads/' . rawurlencode($item["foto"]); ?>
         <img src="<?= $fotoPath ?>" alt="Foto do item" style="max-width:300px; height:auto;">
       <?php else: ?>
         <p>Sem foto.</p>
