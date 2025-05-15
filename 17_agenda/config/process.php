@@ -10,57 +10,65 @@
   // MODIFICAÇÕES NO BANCO
   if(!empty($data)) {
 
-    // Criar contato
+    // Criar item
     if($data["type"] === "create") {
 
-      $name = $data["name"];
-      $phone = $data["phone"];
-      $observations = $data["observations"];
+      $nome = $data["name"];
+      $local = $data["local"];
+      $data_encontro = $data["data"];
+      $foto = "";
+      if(isset($_FILES["foto"]) && $_FILES["foto"]["error"] == 0) {
+        $foto_nome = uniqid() . "_" . $_FILES["foto"]["name"];
+        $foto_destino = "../uploads/" . $foto_nome;
+        move_uploaded_file($_FILES["foto"]["tmp_name"], $foto_destino);
+        $foto = $foto_nome;
+      }
 
-      $query = "INSERT INTO contacts (name, phone, observations) VALUES (:name, :phone, :observations)";
+      $query = "INSERT INTO itens (nome, local, data_encontro, foto) VALUES (:nome, :local, :data_encontro, :foto)";
 
       $stmt = $conn->prepare($query);
 
-      $stmt->bindParam(":name", $name);
-      $stmt->bindParam(":phone", $phone);
-      $stmt->bindParam(":observations", $observations);
+      $stmt->bindParam(":nome", $nome);
+      $stmt->bindParam(":local", $local);
+      $stmt->bindParam(":data_encontro", $data_encontro);
+      $stmt->bindParam(":foto", $foto);
 
       try {
 
         $stmt->execute();
-        $_SESSION["msg"] = "Contato criado com sucesso!";
+        $_SESSION["msg"] = "Item criado com sucesso!";
     
       } catch(PDOException $e) {
-        // erro na conexão
         $error = $e->getMessage();
         echo "Erro: $error";
       }
 
     } else if($data["type"] === "edit") {
 
-      $name = $data["name"];
-      $phone = $data["phone"];
-      $observations = $data["observations"];
+      $nome = $data["name"];
+      $local = $data["local"];
+      $data_encontro = $data["data"];
+      $foto = ""; // Aqui você pode implementar o upload da foto futuramente
       $id = $data["id"];
 
-      $query = "UPDATE contacts 
-                SET name = :name, phone = :phone, observations = :observations 
+      $query = "UPDATE itens 
+                SET nome = :nome, local = :local, data_encontro = :data_encontro, foto = :foto 
                 WHERE id = :id";
 
       $stmt = $conn->prepare($query);
 
-      $stmt->bindParam(":name", $name);
-      $stmt->bindParam(":phone", $phone);
-      $stmt->bindParam(":observations", $observations);
+      $stmt->bindParam(":nome", $nome);
+      $stmt->bindParam(":local", $local);
+      $stmt->bindParam(":data_encontro", $data_encontro);
+      $stmt->bindParam(":foto", $foto);
       $stmt->bindParam(":id", $id);
 
       try {
 
         $stmt->execute();
-        $_SESSION["msg"] = "Contato atualizado com sucesso!";
+        $_SESSION["msg"] = "Item atualizado com sucesso!";
     
       } catch(PDOException $e) {
-        // erro na conexão
         $error = $e->getMessage();
         echo "Erro: $error";
       }
@@ -69,7 +77,7 @@
 
       $id = $data["id"];
 
-      $query = "DELETE FROM contacts WHERE id = :id";
+      $query = "DELETE FROM itens WHERE id = :id";
 
       $stmt = $conn->prepare($query);
 
@@ -78,10 +86,9 @@
       try {
 
         $stmt->execute();
-        $_SESSION["msg"] = "Contato removido com sucesso!";
+        $_SESSION["msg"] = "Item removido com sucesso!";
     
       } catch(PDOException $e) {
-        // erro na conexão
         $error = $e->getMessage();
         echo "Erro: $error";
       }
@@ -100,10 +107,10 @@
       $id = $_GET["id"];
     }
 
-    // Retorna o dado de um contato
+    // Retorna o dado de um item
     if(!empty($id)) {
 
-      $query = "SELECT * FROM contacts WHERE id = :id";
+      $query = "SELECT * FROM itens WHERE id = :id";
 
       $stmt = $conn->prepare($query);
 
@@ -111,20 +118,20 @@
 
       $stmt->execute();
 
-      $contact = $stmt->fetch();
+      $item = $stmt->fetch();
 
     } else {
 
-      // Retorna todos os contatos
-      $contacts = [];
+      // Retorna todos os itens
+      $itens = [];
 
-      $query = "SELECT * FROM contacts";
+      $query = "SELECT * FROM itens";
 
       $stmt = $conn->prepare($query);
 
       $stmt->execute();
       
-      $contacts = $stmt->fetchAll();
+      $itens = $stmt->fetchAll();
 
     }
 
